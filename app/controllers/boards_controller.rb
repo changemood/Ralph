@@ -2,6 +2,7 @@ class BoardsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_resources, only: [:index]  
   before_action :set_resource, only: [:show, :edit, :update, :destroy]
+  after_action :destroy_cards, only: [:destroy]
 
   # GET /boards
   # GET /boards.json
@@ -75,5 +76,10 @@ class BoardsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def board_params
       params.require(:board).permit(:name)
+    end
+
+    # update all dependent cards if board is destroyed(update deleted_at)
+    def destroy_cards
+      Card.where(board: @board).update_all(deleted_at: Time.now)
     end
 end
