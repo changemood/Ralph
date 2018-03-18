@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :cards
   root to: "home#index"
 
   # Better routes for sign_in and sign_up
@@ -12,7 +11,10 @@ Rails.application.routes.draw do
   end
   devise_for :users
 
-  resources :boards
+  resources :boards do
+    resources :cards
+  end
+  resources :cards
 
   # for letter opener web
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?

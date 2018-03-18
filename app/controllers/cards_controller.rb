@@ -1,10 +1,11 @@
 class CardsController < ApplicationController
-  before_action :set_card, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :set_resource, only: [:show, :edit, :update, :destroy]
+  before_action :set_resources, only: [:index, :new]
 
   # GET /cards
   # GET /cards.json
   def index
-    @cards = Card.all
   end
 
   # GET /cards/1
@@ -54,7 +55,7 @@ class CardsController < ApplicationController
   # DELETE /cards/1
   # DELETE /cards/1.json
   def destroy
-    @card.destroy
+    @card.update!(deleted_at: Time.now)
     respond_to do |format|
       format.html { redirect_to cards_url, notice: 'Card was successfully destroyed.' }
       format.json { head :no_content }
@@ -63,12 +64,21 @@ class CardsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_card
+    def set_resource
       @card = Card.find(params[:id])
+    end
+
+    def set_resources
+      if params[:board_id]
+        @board = Board.find(params[:board_id])
+        @cards = @board.cards
+      else
+        @cards = current_user.cards
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def card_params
-      params.require(:card).permit(:title, :body)
+      params.require(:card).permit(:title, :body, :board_id, :user_id)
     end
 end
