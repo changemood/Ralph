@@ -8,6 +8,10 @@ class User < ApplicationRecord
   # This is in addition to a real persisted field like 'username'
   attr_accessor :login
 
+  ### relationship
+  has_many :boards, dependent: :destroy
+
+  ############# For devise
   # override devise's find_first_by_auth_conditions to let user login by either username or email
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
