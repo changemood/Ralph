@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :cards
   root to: "home#index"
 
   # Better routes for sign_in and sign_up
