@@ -46,6 +46,8 @@ group :development, :test do
   gem 'selenium-webdriver'
   # use rspec for testing instead of minitest
   gem 'rspec-rails'
+  # User letter_opener for confirm email on development
+  gem "letter_opener", :group => :development
 end
 
 group :development do
