@@ -29,6 +29,7 @@ class CardsController < ApplicationController
 
     respond_to do |format|
       if @card.save
+        params[:interval] ? @card.add_sr_event(params[:interval].to_i) : @card.add_sr_event
         format.html { redirect_to @card, notice: 'Card was successfully created.' }
         format.json { render :show, status: :created, location: @card }
       else
