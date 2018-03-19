@@ -1,5 +1,5 @@
 class SrRemindMailer < ApplicationMailer
-  default from: 'remind@ralphs.com'
+  default from: 'remind@ralph.com'
 
   def remind(card)
     @card = card
