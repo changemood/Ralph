@@ -1,0 +1,14 @@
+= form_with(model: board, local: true) do |form|
+  - if board.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(board.errors.count, "error")
+        prohibited this board from being saved:
+      %ul
+        - board.errors.full_messages.each do |message|
+          %li= message
+  .field
+    = form.label :name
+    = form.text_field :name, id: :board_name
+  .actions
+    = form.submit

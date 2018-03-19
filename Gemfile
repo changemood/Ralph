@@ -38,6 +38,9 @@ gem 'jbuilder', '~> 2.5'
 gem 'devise'
 gem 'jwt'
 
+# use haml instead of erb
+gem 'haml'
+
 # for background job such as sending email
 gem 'sidekiq'
 gem 'sinatra', require: false
