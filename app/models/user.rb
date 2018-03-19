@@ -10,6 +10,7 @@ class User < ApplicationRecord
 
   ### relationship
   has_many :boards, dependent: :destroy
+  has_many :cards, dependent: :destroy
 
   ############# For devise
   # override devise's find_first_by_auth_conditions to let user login by either username or email

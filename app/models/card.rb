@@ -1,5 +1,6 @@
-class Board < ApplicationRecord
+class Card < ApplicationRecord
   belongs_to :user, required: true
-  has_many :cards, dependent: :destroy
+  belongs_to :board, required: false
+
   default_scope { where(deleted_at: nil).order(created_at: :desc) }
 end
