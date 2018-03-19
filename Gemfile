@@ -62,6 +62,8 @@ group :development do
   # User letter_opener for confirm email on development
   gem 'letter_opener_web'
   gem 'letter_opener'
+  # use foreman for development
+  gem 'foreman'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
