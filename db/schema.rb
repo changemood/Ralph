@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180318131529) do
+ActiveRecord::Schema.define(version: 20180319101539) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,20 @@ ActiveRecord::Schema.define(version: 20180318131529) do
     t.datetime "deleted_at"
     t.index ["board_id"], name: "index_cards_on_board_id"
     t.index ["user_id"], name: "index_cards_on_user_id"
+  end
+
+  create_table "sr_events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "interval"
+    t.integer "review_count"
+    t.datetime "next_review_at"
+    t.datetime "reviewed_at"
+    t.uuid "user_id"
+    t.uuid "card_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["card_id"], name: "index_sr_events_on_card_id"
+    t.index ["user_id"], name: "index_sr_events_on_user_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -64,4 +78,6 @@ ActiveRecord::Schema.define(version: 20180318131529) do
   add_foreign_key "boards", "users"
   add_foreign_key "cards", "boards"
   add_foreign_key "cards", "users"
+  add_foreign_key "sr_events", "cards"
+  add_foreign_key "sr_events", "users"
 end
