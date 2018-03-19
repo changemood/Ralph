@@ -54,5 +54,5 @@ Rails.application.configure do
 
   # Use letteropener to see email on development env
   config.action_mailer.default_url_options = { host: '127.0.0.1:5000' }
-  config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.delivery_method = :letter_opener_web
 end
