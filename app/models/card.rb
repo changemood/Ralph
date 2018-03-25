@@ -2,8 +2,11 @@ class Card < ApplicationRecord
   belongs_to :user, required: true
   # Card doesn't have to belong to board.(board_id can be nil)
   belongs_to :board, required: false
-  has_many :sr_events, dependent: :destroy
-
+	has_many :sr_events, dependent: :destroy
+	# ancestry is a simpler tree structure and faster in general compared to Closure tree So we decided to use ancestry
+	# Please refer to the link below for more info
+	# https://www.hilman.io/blog/2015/09/comparing-ancestry-and-closure_tree/
+	has_ancestry
   default_scope { where(deleted_at: nil).order(created_at: :desc) }
 
   # insert sr_event record

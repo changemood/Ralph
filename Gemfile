@@ -41,6 +41,9 @@ gem 'jwt'
 # use haml instead of erb
 gem 'haml'
 
+# use ancestry for tree structure
+gem 'ancestry'
+
 # for background job such as sending email
 gem 'sidekiq'
 gem 'sinatra', require: false
