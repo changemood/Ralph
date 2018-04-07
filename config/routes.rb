@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   end
   resources :cards do
     member do
-      put 'update_ancestry'
+      patch :update_ancestry
     end
   end
 
