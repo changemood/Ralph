@@ -1,5 +1,5 @@
 class CardsController < ApplicationController
-  # before_action :authenticate_user!
+  before_action :authenticate_user!
   before_action :set_resource, only: [:show, :edit, :update, :destroy, :update_ancestry]
   before_action :set_resources, only: [:index, :new]
 
