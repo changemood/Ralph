@@ -1,6 +1,6 @@
 class CardsController < ApplicationController
-  before_action :authenticate_user!
-  before_action :set_resource, only: [:show, :edit, :update, :destroy]
+  # before_action :authenticate_user!
+  before_action :set_resource, only: [:show, :edit, :update, :destroy, :update_ancestry]
   before_action :set_resources, only: [:index, :new]
 
   # GET /cards
@@ -57,7 +57,7 @@ class CardsController < ApplicationController
   # PATCH/PUT /cards/1.json
   def update_ancestry
     respond_to do |format|
-      if @card.update(card_update_ancestry_params)
+      if @card.update(parent: Card.find(card_update_ancestry_params))
         format.html { redirect_to @card, notice: 'Ancestry was successfully updated.' }
         format.json { render :show, status: :ok, location: @card }
       else
@@ -98,6 +98,6 @@ class CardsController < ApplicationController
     end
 
     def card_update_ancestry_params
-      params.require(:card).permit(:ancestry)
+      params.require(:parent_id)
     end
 end
