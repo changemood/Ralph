@@ -14,7 +14,11 @@ Rails.application.routes.draw do
   resources :boards do
     resources :cards
   end
-  resources :cards
+  resources :cards do
+    member do
+      patch :update_ancestry
+    end
+  end
 
   # for sidekiq dashboard
   require 'sidekiq/web'
