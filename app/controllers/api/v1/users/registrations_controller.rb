@@ -1,4 +1,5 @@
 class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
+  respond_to :json
 
   # Override create to return json
   def create
