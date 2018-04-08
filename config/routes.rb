@@ -6,10 +6,12 @@ namespace :api, defaults: { format: :json } do
   namespace :v1 do
     # Since we need to customize contoller, we skip registrations ans sessions,
     # and manually add by devise_scope
-    devise_for :users, as: :users, skip: [:registrations, :sessions]
+    # devise_for :users, as: :users, skip: [:registrations, :sessions,]
     devise_scope :user do
       post '/users', to: 'users/registrations#create'
       post '/users/sign_in', to: 'users/sessions#create'
+      get  '/users/confirmation', to: 'users/confirmations#show'
+      post '/users/confirmation', to: 'users/confirmations#create'
     end
  end
 end
