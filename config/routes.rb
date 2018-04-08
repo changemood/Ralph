@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
   root to: "home#index"
 
+##########################################################API
+namespace :api do
+  namespace :v1 do
+ end
+end
+
+########################################################## WEB
+# For WEB, we should have routes only for admin usage in the future...
   # Better routes for sign_in and sign_up
   as :user do
     get 'sign_in', to: 'devise/sessions#new'
