@@ -12,6 +12,14 @@ namespace :api, defaults: { format: :json } do
       patch  '/users/password', to: 'users/passwords#update'
       post '/users/password', to: 'users/passwords#create'
     end
+    resources :boards do
+      resources :cards
+    end
+    resources :cards do
+      member do
+        patch :update_ancestry
+      end
+    end
  end
 end
 
