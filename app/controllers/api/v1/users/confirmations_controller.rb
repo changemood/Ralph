@@ -1,6 +1,6 @@
 class Api::V1::Users::ConfirmationsController < Devise::RegistrationsController
 
-  # POST /api/vi/users/confirmation
+  # POST /api/v1/users/confirmation
   # send confirmation email again
   def create
     self.resource = resource_class.send_confirmation_instructions(resource_params)
@@ -14,7 +14,7 @@ class Api::V1::Users::ConfirmationsController < Devise::RegistrationsController
     end
   end
 
-  # GET /api/vi/users/confirmation?confirmation_token=abcdef
+  # GET /api/v1/users/confirmation?confirmation_token=abcdef
   def show
     self.resource = resource_class.confirm_by_token(params[:confirmation_token])
     yield resource if block_given?

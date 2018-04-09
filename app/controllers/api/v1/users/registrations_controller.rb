@@ -1,6 +1,7 @@
 class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
   respond_to :json
 
+  # POST api/v1/users
   # Override create to return json
   def create
     build_resource(sign_up_params)
