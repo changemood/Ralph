@@ -2,8 +2,16 @@ Rails.application.routes.draw do
   root to: "home#index"
 
 ##########################################################API
-namespace :api do
+namespace :api, defaults: { format: :json } do
   namespace :v1 do
+    devise_scope :user do
+      post '/users', to: 'users/registrations#create'
+      post '/users/sign_in', to: 'users/sessions#create'
+      get  '/users/confirmation', to: 'users/confirmations#show'
+      post '/users/confirmation', to: 'users/confirmations#create'
+      patch  '/users/password', to: 'users/passwords#update'
+      post '/users/password', to: 'users/passwords#create'
+    end
  end
 end
 
