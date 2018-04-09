@@ -17,7 +17,7 @@ class Api::V1::Users::PasswordsController < Devise::SessionsController
     self.resource = resource_class.reset_password_by_token(resource_params)
     if resource.errors.empty?
       resource.unlock_access! if unlockable?(resource)
-      render json: {user_id: resource.id, token: JWTWrapper.encode({ user_id: resource.id }), expires_in: Rails.application.secrets.jwt_expiration_hours}
+      render json: {token: JWTWrapper.encode({ user_id: resource.id })}
     else
       set_minimum_password_length
       respond_with resource
