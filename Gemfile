@@ -37,6 +37,7 @@ gem 'jbuilder', '~> 2.5'
 # For authentication
 gem 'devise'
 gem 'jwt'
+gem "omniauth-google-oauth2", "~> 0.2.1"
 
 # use haml instead of erb
 gem 'haml'
