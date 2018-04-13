@@ -2,7 +2,8 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable,
+         :omniauthable
   validates :username, presence: :true, uniqueness: { case_sensitive: false }
   # Virtual attribute for authenticating by either username or email
   # This is in addition to a real persisted field like 'username'
@@ -22,5 +23,18 @@ class User < ApplicationRecord
     else
       where(conditions).first
     end
+  end
+
+  # google authentication.
+  def self.find_or_create_user_for_google(data)
+    user = self.find_by(email: data[:email])
+    return user if user
+    self.create!(email:         data[:email],
+                 username:      data[:name],
+                 provider:      "google_oauth2",
+                 uid:           data[:email],
+                 refresh_token: self.generate_unique_secure_token,
+                 password:      Devise.friendly_token[0, 20],
+                 confirmed_at:   Time.now)
   end
 end

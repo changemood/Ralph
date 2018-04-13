@@ -5,9 +5,11 @@
   %p
     = link_to 'Account', user_path
   %p
-    = link_to 'Sign Out', destroy_user_session_path
+    = link_to 'Sign Out', destroy_user_session_path, method: :delete
 - else
   %p
     = link_to 'Sign Up', sign_up_path
   %p
     = link_to 'Sign In', sign_in_path
+  %p
+    = link_to 'google auth', user_google_omniauth_authorize_path
