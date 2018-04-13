@@ -12,6 +12,8 @@ namespace :api, defaults: { format: :json } do
       patch  '/users/password', to: 'users/passwords#update'
       post '/users/password', to: 'users/passwords#create'
     end
+    # Oauth
+    post '/users/google', to: 'users/oauth#google'
  end
 end
 

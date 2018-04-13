@@ -39,6 +39,9 @@ gem 'devise'
 gem 'jwt'
 gem "omniauth-google-oauth2", "~> 0.2.1"
 
+# Http Request
+gem 'httparty'
+
 # use haml instead of erb
 gem 'haml'
 
