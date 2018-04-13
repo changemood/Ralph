@@ -25,7 +25,9 @@ end
     get 'sign_up', to: 'devise/registrations#new'
     get 'user', to: 'devise/registrations#edit'
   end
-  devise_for :users
+  devise_for :users, controllers: {
+    :omniauth_callbacks => "users/omniauth_callbacks"
+  }
 
   resources :boards do
     resources :cards
