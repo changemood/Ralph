@@ -27,12 +27,12 @@ class User < ApplicationRecord
 
   # google authentication.
   def self.find_or_create_user_for_google(data)
-    user = self.find_by(email: data['email'])
+    user = self.find_by(email: data[:email])
     return user if user
-    self.create!(email:         data['email'],
-                 username:      data['name'],
+    self.create!(email:         data[:email],
+                 username:      data[:name],
                  provider:      "google_oauth2",
-                 uid:           data['email'],
+                 uid:           data[:email],
                  refresh_token: self.generate_unique_secure_token,
                  password:      Devise.friendly_token[0, 20],
                  confirmed_at:  Time.now)
