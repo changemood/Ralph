@@ -12,6 +12,8 @@ namespace :api, defaults: { format: :json } do
       patch  '/users/password', to: 'users/passwords#update'
       post '/users/password', to: 'users/passwords#create'
     end
+    # Oauth
+    post '/users/google', to: 'users/oauth#google'
     resources :boards do
       resources :cards
     end
@@ -33,7 +35,9 @@ end
     get 'sign_up', to: 'devise/registrations#new'
     get 'user', to: 'devise/registrations#edit'
   end
-  devise_for :users
+  devise_for :users, controllers: {
+    :omniauth_callbacks => "users/omniauth_callbacks"
+  }
 
   resources :boards do
     resources :cards
