@@ -14,6 +14,14 @@ namespace :api, defaults: { format: :json } do
     end
     # Oauth
     post '/users/google', to: 'users/oauth#google'
+    resources :boards do
+      resources :cards
+    end
+    resources :cards do
+      member do
+        patch :update_ancestry
+      end
+    end
  end
 end
 
