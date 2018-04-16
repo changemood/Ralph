@@ -42,6 +42,9 @@ gem "omniauth-google-oauth2", "~> 0.2.1"
 # Http Request
 gem 'httparty'
 
+# Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
+gem 'rack-cors'
+
 # use haml instead of erb
 gem 'haml'
 
