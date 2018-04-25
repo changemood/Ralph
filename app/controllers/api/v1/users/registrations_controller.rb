@@ -7,7 +7,8 @@ class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
     build_resource(sign_up_params)
     resource.save
     if resource.persisted?
-      render json: {token: JWTWrapper.encode({ user_id: resource.id })}
+      render json: {token: JWTWrapper.encode({ user_id: resource.id }), 
+                    expires_in: Rails.application.secrets.jwt_expiration_hours}
     else
       clean_up_passwords resource
       set_minimum_password_length
