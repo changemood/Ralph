@@ -134,7 +134,7 @@ GEM
       rack (>= 1.6.2, < 3)
     omniauth-google-oauth2 (0.2.2)
       omniauth (~> 1.0)
-      omniauth-oauth2
+      omniauth-oauth2 (~> 1.1.2)
     omniauth-oauth2 (1.0.2)
       oauth2 (~> 0.6.0)
       omniauth (~> 1.0)
@@ -143,6 +143,7 @@ GEM
     public_suffix (3.0.2)
     puma (3.11.3)
     rack (2.0.4)
+    rack-cors (1.0.2)
     rack-protection (2.0.1)
       rack
     rack-test (0.8.3)
@@ -163,7 +164,7 @@ GEM
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.0.3)
-      loofah (~> 2.0)
+      loofah (~> 2.2.1)
     railties (5.1.4)
       actionpack (= 5.1.4)
       activesupport (= 5.1.4)
@@ -277,6 +278,7 @@ DEPENDENCIES
   omniauth-google-oauth2 (~> 0.2.1)
   pg (~> 0.18)
   puma (~> 3.7)
+  rack-cors
   rails (= 5.1.4)
   rspec-rails
   sass-rails (~> 5.0)
