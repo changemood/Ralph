@@ -9,6 +9,7 @@ class Card < ApplicationRecord
   # https://www.hilman.io/blog/2015/09/comparing-ancestry-and-closure_tree/
   has_ancestry
   default_scope { where(deleted_at: nil).order(created_at: :desc) }
+  scope :review_cards, -> { joins(:sr_events).merge(SrEvent.need_review) }
 
   # insert sr_event record
   # TODO: need to consider how we set next_review_at
