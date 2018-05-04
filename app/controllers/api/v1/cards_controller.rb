@@ -1,6 +1,6 @@
 class Api::V1::CardsController < Api::V1::BaseController
   before_action :set_resource, only: [:show, :update, :destroy, :update_ancestry]
-  before_action :set_resources, only: [:index, :create]
+  before_action :set_resources, only: [:index, :create, :review_cards]
 
   # GET /api/v1/cards
   # GET /api/v1/cards.json
@@ -53,6 +53,12 @@ class Api::V1::CardsController < Api::V1::BaseController
     head :no_content
   end
 
+  # GET /api/v1/cards/review_cards.json
+  def review_cards
+    @review_cards = @cards.review_cards
+    render :review_cards, status: :ok
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_resource
@@ -61,8 +67,7 @@ class Api::V1::CardsController < Api::V1::BaseController
 
     def set_resources
       if params[:board_id]
-        @board = Board.find(params[:board_id])
-        @cards = @board.cards
+        @cards = Board.find(params[:board_id]).cards
       else
         @cards = current_user.cards
       end

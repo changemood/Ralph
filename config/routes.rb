@@ -21,6 +21,9 @@ namespace :api, defaults: { format: :json } do
       member do
         patch :update_ancestry
       end
+      collection do
+        get :review_cards
+      end
     end
  end
 end
