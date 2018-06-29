@@ -2,20 +2,20 @@ class Api::V1::CardsController < Api::V1::BaseController
   before_action :set_resource, only: [:show, :update, :destroy, :update_ancestry]
   before_action :set_resources, only: [:index, :create, :review_cards]
 
-  # GET /api/v1/cards
-  # GET /api/v1/cards.json
+  # GET /v1/cards
+  # GET /v1/cards.json
   def index
     render :index, status: :ok
   end
 
-  # GET /api/v1/cards/1
-  # GET /api/v1/cards/1.json
+  # GET /v1/cards/1
+  # GET /v1/cards/1.json
   def show
-    render :show, status: :ok    
+    render :show, status: :ok
   end
 
-  # POST /api/v1/cards
-  # POST /api/v1/cards.json
+  # POST /v1/cards
+  # POST /v1/cards.json
   def create
     @card = @cards.new(card_params)
     if @card.save
@@ -26,8 +26,8 @@ class Api::V1::CardsController < Api::V1::BaseController
     end
   end
 
-  # PATCH/PUT /api/v1/cards/1
-  # PATCH/PUT /api/v1/cards/1.json
+  # PATCH/PUT /v1/cards/1
+  # PATCH/PUT /v1/cards/1.json
   def update
     if @card.update(card_params)
       render :show, status: :created
@@ -36,8 +36,8 @@ class Api::V1::CardsController < Api::V1::BaseController
     end
   end
 
-  # PATCH/PUT /api/v1/cards/1
-  # PATCH/PUT /api/v1/cards/1.json
+  # PATCH/PUT /v1/cards/1
+  # PATCH/PUT /v1/cards/1.json
   def update_ancestry
     if @card.update(parent: Card.find(card_update_ancestry_params))
       render :show, status: :created
@@ -46,14 +46,14 @@ class Api::V1::CardsController < Api::V1::BaseController
     end
   end
 
-  # DELETE /api/v1/cards/1
-  # DELETE /api/v1/cards/1.json
+  # DELETE /v1/cards/1
+  # DELETE /v1/cards/1.json
   def destroy
     @card.update!(deleted_at: Time.now)
     head :no_content
   end
 
-  # GET /api/v1/cards/review_cards.json
+  # GET /v1/cards/review_cards.json
   def review_cards
     @review_cards = @cards.review_cards
     render :review_cards, status: :ok

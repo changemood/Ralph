@@ -1,6 +1,6 @@
 class Api::V1::Users::PasswordsController < Devise::SessionsController
   respond_to :json
-  # POST /api/v1/users/password
+  # POST /v1/users/password
   # send reset password
   def create
     self.resource = resource_class.send_reset_password_instructions(resource_params)
@@ -12,7 +12,7 @@ class Api::V1::Users::PasswordsController < Devise::SessionsController
     end
   end
 
-  # PATCH /api/v1/users/password
+  # PATCH /v1/users/password
   def update
     self.resource = resource_class.reset_password_by_token(resource_params)
     if resource.errors.empty?

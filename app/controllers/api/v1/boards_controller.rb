@@ -2,20 +2,20 @@ class Api::V1::BoardsController < Api::V1::BaseController
   before_action :set_resources, only: [:index]  
   before_action :set_resource, only: [:show, :edit, :update, :destroy]
   
-  # GET /api/v1/boards
-  # GET /api/v1/boards.json
+  # GET /v1/boards
+  # GET /v1/boards.json
   def index
     render :index, status: :ok
   end
 
-  # GET /api/v1/boards/1
-  # GET /api/v1/boards/1.json
+  # GET /v1/boards/1
+  # GET /v1/boards/1.json
   def show
     render :show, status: :ok    
   end
 
-  # POST /api/v1/boards
-  # POST /api/v1/boards.json
+  # POST /v1/boards
+  # POST /v1/boards.json
   def create
     @board = current_user.boards.new(board_params)
     if @board.save
@@ -25,8 +25,8 @@ class Api::V1::BoardsController < Api::V1::BaseController
     end
   end
 
-  # PATCH/PUT /api/v1/boards/1
-  # PATCH/PUT /api/v1/boards/1.json
+  # PATCH/PUT /v1/boards/1
+  # PATCH/PUT /v1/boards/1.json
   def update
     if @board.update(board_params)
       render :show, status: :ok
@@ -35,8 +35,8 @@ class Api::V1::BoardsController < Api::V1::BaseController
     end
   end
 
-  # DELETE /api/v1/boards/1
-  # DELETE /api/v1/boards/1.json
+  # DELETE /v1/boards/1
+  # DELETE /v1/boards/1.json
   def destroy
     if @board.update!(deleted_at: Time.now)
       destroy_cards
