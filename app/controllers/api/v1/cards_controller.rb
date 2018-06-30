@@ -1,11 +1,18 @@
 class Api::V1::CardsController < Api::V1::BaseController
   before_action :set_resource, only: [:show, :update, :destroy, :update_ancestry]
-  before_action :set_resources, only: [:index, :create, :review_cards]
+  before_action :set_resources, only: [:index, :create, :review_cards, :tree]
 
   # GET /v1/cards
   # GET /v1/cards.json
   def index
     render :index, status: :ok
+  end
+
+  # GET /v1/boards/xxxx/tree.json
+  # We expect to call this with board id...
+  def tree
+    @roots = @cards.roots
+    render :tree, status: :ok
   end
 
   # GET /v1/cards/1
