@@ -46,7 +46,7 @@ class Api::V1::CardsController < Api::V1::BaseController
   # PATCH/PUT /v1/cards/1
   # PATCH/PUT /v1/cards/1.json
   def update_ancestry
-    if @card.update(parent: Card.find(card_update_ancestry_params))
+    if @card.update(parent: Card.find_by_id(params[:parent_id]))
       render :show, status: :created
     else
       render json: @card.errors, status: :unprocessable_entity
@@ -83,9 +83,5 @@ class Api::V1::CardsController < Api::V1::BaseController
     # Never trust parameters from the scary internet, only allow the white list through.
     def card_params
       params.require(:card).permit(:title, :body, :board_id, :user_id)
-    end
-
-    def card_update_ancestry_params
-      params.require(:parent_id)
     end
 end
