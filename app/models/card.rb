@@ -32,6 +32,7 @@ class Card < ApplicationRecord
   # e.g. [{title: "Chicken",expanded: true,children: [{ title: "Egg", children: [{ title: "test" }]] }...]
   def as_sortable_tree_json
     {
+      id: self.id,
       title: self.title,
       subtitle: self.body,
       children: self.children.map {|child| child.as_sortable_tree_json}
