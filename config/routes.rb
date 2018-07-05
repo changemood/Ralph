@@ -15,7 +15,11 @@ scope module: :api, defaults: { format: :json } do
     # Oauth
     post '/users/google', to: 'users/oauth#google'
     resources :boards do
-      resources :cards
+      resources :cards do
+        collection do
+          get :tree
+        end
+      end
     end
     resources :cards do
       member do

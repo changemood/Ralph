@@ -27,4 +27,16 @@ class Card < ApplicationRecord
     next_review_at = Time.now + interval.hours * review_count
     self.sr_events.create!(interval: interval, review_count: review_count, next_review_at: next_review_at, user_id: self.user_id)
   end
+
+  # To show sortable tree card json we need to follow their format
+  # e.g. [{title: "Chicken",expanded: true,children: [{ title: "Egg", children: [{ title: "test" }]] }...]
+  def as_sortable_tree_json
+    {
+      id: self.id,
+      title: self.title,
+      subtitle: self.body,
+      children: self.children.map {|child| child.as_sortable_tree_json}
+    }
+  end
+
 end
