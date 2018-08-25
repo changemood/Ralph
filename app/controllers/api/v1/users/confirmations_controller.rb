@@ -20,8 +20,7 @@ class Api::V1::Users::ConfirmationsController < Devise::RegistrationsController
     yield resource if block_given?
 
     if resource.errors.empty?
-      render json: {token: JWTWrapper.encode({ user_id: resource.id }), 
-                    expires_in: Rails.application.secrets.jwt_expiration_hours}
+      render json: resource, status: :ok
     else
       render json: resource.errors, status: :unprocessable_entity
     end
