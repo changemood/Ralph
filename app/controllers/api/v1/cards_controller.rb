@@ -1,24 +1,27 @@
 class Api::V1::CardsController < Api::V1::BaseController
-  before_action :set_resource, only: [:show, :update, :destroy, :update_ancestry]
+  before_action :set_resource, only: [:show, :update, :destroy, :update_ancestry, :up, :down]
   before_action :set_resources, only: [:index, :create, :review_cards, :tree]
 
   # GET /v1/cards
   # GET /v1/cards.json
   def index
-    render :index, status: :ok
+    # TODO: pagination
+    @cards = @cards.order('created_at desc')
+    render json: @cards, status: :ok
   end
 
   # GET /v1/boards/xxxx/tree.json
   # We expect to call this with board id...
   def tree
     @roots = @cards.roots
+    # TODO: remove jbuilder?
     render :tree, status: :ok
   end
 
   # GET /v1/cards/1
   # GET /v1/cards/1.json
   def show
-    render :show, status: :ok
+    render json: @card, status: :ok
   end
 
   # POST /v1/cards
@@ -27,8 +30,8 @@ class Api::V1::CardsController < Api::V1::BaseController
     @card = @cards.new(card_params)
     @card.assign_attributes(parent: Card.find_by_id(params[:card][:parent_id])) if params[:card][:parent_id]
     if @card.save
-      params[:interval] ? @card.add_sr_event(params[:interval].to_i) : @card.add_sr_event
-      render :show, status: :created
+      @card.add_sr_event(1)
+      render json: @card, status: :created
     else
       render json: @card.errors, status: :unprocessable_entity
     end
@@ -38,17 +41,16 @@ class Api::V1::CardsController < Api::V1::BaseController
   # PATCH/PUT /v1/cards/1.json
   def update
     if @card.update(card_params)
-      render :show, status: :created
+      render json: @card, status: :created
     else
       render json: @card.errors, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /v1/cards/1
-  # PATCH/PUT /v1/cards/1.json
+  # PATCH/PUT /v1/cards/1/update_ancestry.json
   def update_ancestry
     if @card.update(parent: Card.find_by_id(params[:parent_id]))
-      render :show, status: :created
+      render json: @card, status: :created
     else
       render json: @card.errors, status: :unprocessable_entity
     end
@@ -64,7 +66,25 @@ class Api::V1::CardsController < Api::V1::BaseController
   # GET /v1/cards/review_cards.json
   def review_cards
     @review_cards = @cards.review_cards
-    render :review_cards, status: :ok
+    render json: @review_cards, status: :ok
+  end
+
+  # POST: /v1/cards/up.json
+  def up
+    if @card.up!
+      render json: @card, status: :ok
+    else
+      raise "THIS CARD IS NOT READY"
+    end
+  end
+
+  # POST: /v1/cards/down.json
+  def down
+    if @card.down!
+      render json: @card, status: :ok
+    else
+      raise "THIS CARD IS NOT READY"
+    end
   end
 
   private

@@ -25,6 +25,8 @@ scope module: :api, defaults: { format: :json } do
     resources :cards do
       member do
         patch :update_ancestry
+        post :up
+        post :down
       end
       collection do
         get :review_cards
