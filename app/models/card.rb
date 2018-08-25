@@ -24,7 +24,7 @@ class Card < ApplicationRecord
 
   # When user click 👍, set next review with longer time span
   def up!
-    sr_event = self.sr_events.first
+    sr_event = self.latest_sr_event
     if sr_event && sr_event.next_review_at < Time.now
       sr_event.reviewed!
       self.add_sr_event(sr_event.review_count + 1)
@@ -35,7 +35,7 @@ class Card < ApplicationRecord
   end
   # When user click 👎, set next review with same time span
   def down!
-    sr_event = self.sr_events.first
+    sr_event = self.latest_sr_event
     if sr_event && sr_event.next_review_at < Time.now
       sr_event.reviewed!
       self.add_sr_event(sr_event.review_count)
@@ -43,6 +43,10 @@ class Card < ApplicationRecord
       puts "WARNING: this card is not ready to be reviewed"
       puts "WARNING: Either because card doesn't have sr_event or need to wait to next_review_at"
     end
+  end
+
+  def latest_sr_event
+    self.sr_events.order('created_at desc').first
   end
 
   # insert sr_event record

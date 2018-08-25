@@ -5,6 +5,8 @@ class Api::V1::BoardsController < Api::V1::BaseController
   # GET /v1/boards
   # GET /v1/boards.json
   def index
+    # TODO: pagination
+    @boards = @boards.order('created_at desc')
     render :index, status: :ok
   end
 
