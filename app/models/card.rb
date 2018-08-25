@@ -12,20 +12,47 @@ class Card < ApplicationRecord
   has_ancestry
   scope :review_cards, -> { joins(:sr_events).merge(SrEvent.need_review) }
 
+  # For now, we hard code intervals here...
+  # TODO: maybe user should be able to decide intervals? like each board can have pace...?
+  INTERVALS = {
+    1 => 4,
+    2 => 8,
+    3 => 12,
+    4 => 24,
+    5 => 72
+  }
+
+  # When user click 👍, set next review with longer time span
+  def up!
+    sr_event = self.sr_events.first
+    if sr_event && sr_event.next_review_at < Time.now
+      sr_event.reviewed!
+      self.add_sr_event(sr_event.review_count + 1)
+    else
+      puts "WARNING: this card is not ready to be reviewed"
+      puts "WARNING: Either because card doesn't have sr_event or need to wait to next_review_at"
+    end
+  end
+  # When user click 👎, set next review with same time span
+  def down!
+    sr_event = self.sr_events.first
+    if sr_event && sr_event.next_review_at < Time.now
+      sr_event.reviewed!
+      self.add_sr_event(sr_event.review_count)
+    else
+      puts "WARNING: this card is not ready to be reviewed"
+      puts "WARNING: Either because card doesn't have sr_event or need to wait to next_review_at"
+    end
+  end
+
   # insert sr_event record
   # TODO: need to consider how we set next_review_at
   # for now we set interval for 4 hours
   # e.g. first interval is 4. from next time, it will be 8, 12, 16...
   # OR we can let user decide. or we never change interval, and user change when they want to.
-  def add_sr_event(interval=4)
-    sr_events = SrEvent.filtered_by_card(self.id)
-    if sr_events.any?
-      review_count = sr_events.last.review_count
-    else
-      review_count = 1
-    end
-    # for now, we set it interval * review_count from second time
-    next_review_at = Time.now + interval.hours * review_count
+  def add_sr_event(review_count)
+    interval = (review_count > 5) ? 72 : INTERVALS[review_count]
+    next_review_at = Time.now + interval.hours
     self.sr_events.create!(interval: interval, review_count: review_count, next_review_at: next_review_at, user_id: self.user_id)
   end
 

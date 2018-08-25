@@ -9,6 +9,9 @@ class SrEvent < ApplicationRecord
   scope :filtered_by_card, -> (card_id) { where(card_id: card_id).order(:created_at) }
   scope :need_review,      -> { where(reviewed_at: nil).where("next_review_at < ?", Time.now) }
 
+  def reviewed!
+    self.touch(:reviewed_at)
+  end
   private
   # everytime sr_event is created, we set SendSrRemindJob
   def set_send_sr_remind_job

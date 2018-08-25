@@ -27,7 +27,7 @@ class Api::V1::CardsController < Api::V1::BaseController
     @card = @cards.new(card_params)
     @card.assign_attributes(parent: Card.find_by_id(params[:card][:parent_id])) if params[:card][:parent_id]
     if @card.save
-      params[:interval] ? @card.add_sr_event(params[:interval].to_i) : @card.add_sr_event
+      @card.add_sr_event(1)
       render :show, status: :created
     else
       render json: @card.errors, status: :unprocessable_entity
@@ -65,6 +65,12 @@ class Api::V1::CardsController < Api::V1::BaseController
   def review_cards
     @review_cards = @cards.review_cards
     render :review_cards, status: :ok
+  end
+
+  def up
+  end
+
+  def down
   end
 
   private
