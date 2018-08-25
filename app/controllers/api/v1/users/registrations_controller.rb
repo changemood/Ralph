@@ -14,4 +14,11 @@ class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
       respond_with resource
     end
   end
+
+  protected
+  # NOTE: Overwriting this because we don't require password to update user
+  # By default on devise, require a password checks on update.
+  def update_resource(resource, params)
+    resource.update_without_password(params)
+  end
 end

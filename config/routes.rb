@@ -6,6 +6,7 @@ scope module: :api, defaults: { format: :json } do
   namespace :v1 do
     devise_scope :user do
       post '/users', to: 'users/registrations#create'
+      patch '/users', to: 'users/registrations#update'
       post '/users/sign_in', to: 'users/sessions#create'
       get  '/users/confirmation', to: 'users/confirmations#show'
       post '/users/confirmation', to: 'users/confirmations#create'
