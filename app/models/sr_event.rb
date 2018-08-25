@@ -1,10 +1,11 @@
 class SrEvent < ApplicationRecord
+  acts_as_paranoid
+
   belongs_to :user
   belongs_to :card
 
   after_create :set_send_sr_remind_job
 
-  default_scope { where(deleted_at: nil).order(created_at: :desc) }
   scope :filtered_by_card, -> (card_id) { where(card_id: card_id).order(:created_at) }
   scope :need_review,      -> { where(reviewed_at: nil).where("next_review_at < ?", Time.now) }
 

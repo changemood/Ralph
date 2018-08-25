@@ -1,4 +1,6 @@
 class Card < ApplicationRecord
+  acts_as_paranoid
+
   belongs_to :user, required: true
   # Card doesn't have to belong to board.(board_id can be nil)
   belongs_to :board, required: false
@@ -8,7 +10,6 @@ class Card < ApplicationRecord
   # Please refer to the link below for more info
   # https://www.hilman.io/blog/2015/09/comparing-ancestry-and-closure_tree/
   has_ancestry
-  default_scope { where(deleted_at: nil).order(created_at: :desc) }
   scope :review_cards, -> { joins(:sr_events).merge(SrEvent.need_review) }
 
   # insert sr_event record
