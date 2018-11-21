@@ -1,0 +1,47 @@
+{
+  "name": "ralphs test app.json",
+  "scripts": {
+    "postdeploy": "bundle exec rake db:migrate db:seed"
+  },
+  "env": {
+    "LANG": {
+      "value": "en_US.UTF-8",
+      "required": true
+    },
+    "RACK_ENV": {
+      "required": true
+    },
+    "RAILS_ENV": {
+      "required": true
+    },
+    "RAILS_LOG_TO_STDOUT": {
+      "required": true
+    },
+    "RAILS_SERVE_STATIC_FILES": {
+      "required": true
+    },
+    "SECRET_KEY_BASE": {
+      "generator": "secret"
+    },
+    "HEROKU_APP_NAME": {
+      "required": false
+    },
+    "HEROKU_PARENT_APP_NAME": {
+      "required": false
+    },
+    "SCOUT_HOST": "https://${process.env.HEROKU_APP_NAME}.herokuapp.com"
+  },
+  "formation": {
+    "web": { "quantity": 1 },
+    "worker": { "quantity": 1 }
+  },
+  "addons": [
+        "heroku-postgresql"
+    ],
+  "buildpacks": [
+    {
+      "url": "heroku/ruby"
+    }
+  ]
+}
+  
